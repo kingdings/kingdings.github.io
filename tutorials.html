@@ -101,7 +101,7 @@ The category of operations is used in creating and updating statements to change
 CREATE TABLE userTrajs (      CREATE TABLE userSensors(       CREATE TABLE userVideos (       CREATE TABLE city(
 	id	integer,            id	integer,                  id	integer,              id	integer,
    	carnumber  text);          carnumber	text);             name  text);                   name	text,
-                                                                                                  geo	polygon);
+                                                                                                  geo	geometry);
 	
 </pre>
 </div>
@@ -175,8 +175,8 @@ Retrieve videos in userVideos table which have entered the city 'New York'. <br>
 <div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 48px;">
 SELECT id, name, mv
-FROM carTrajs a, city c
-WHERE M_Enters(a.mt, c.geo ) = true AND c.name='New York';</pre>
+FROM userVideos a, city c
+WHERE M_Enters(a.mv, c.geo ) = true AND c.name='New York';</pre>
 </div>
 <hr>
 <h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
@@ -184,8 +184,8 @@ Retrieve the cars in userTrajs table that have left from city ‘New York’ dur
 <div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 48px;">
 SELECT id, carnumber
-FROM carTrajs a, city c
-WHERE  M_Leaves(M_Slice(a.mt,'Period(1100, 1200)'), c.geo) = true AND c.name = 'New York';
+FROM userTrajs a, city c
+WHERE  M_Leaves(M_Slice(a.mt,'Period (1100, 1200)'), c.geo) = true AND c.name = 'New York';
 </pre>
 </div>
 <hr>
@@ -193,9 +193,9 @@ WHERE  M_Leaves(M_Slice(a.mt,'Period(1100, 1200)'), c.geo) = true AND c.name = '
 Retrieve the cars in userTrajs table that traveled up to 500m from central New York city.<br><br>
 <div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 65px;">SELECT id, carnumber
-FROM carTrajs a 
-WHERE  M_Max( M_Distance( a.mt, 'POLYGON
-(40.74 -73.99, 40.74 -73.98, 40.73 -73.98, 40.73 -73.99, 40.74 -73.99 )') < 500.0;</pre>
+FROM userTrajs a 
+WHERE  M_Max( 
+M_Distance( a.mt, 'POLYGON ((40.74 -73.99, 40.74 -73.98, 40.73 -73.98, 40.73 -73.99, 40.74 -73.99 ))')) < 500.0;</pre>
 </div>
 <br><br>
 <h4 class=" text-left mb-sm-2">Similarity queries	</h4>
@@ -203,7 +203,7 @@ WHERE  M_Max( M_Distance( a.mt, 'POLYGON
 <h6 style=" font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
 Return LCVS similarity distances between two videos in userVideos table.<br><br>
 <div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
-<pre style="height: 32px;">SELECT a.id, b.id, M_LCVS (a.mv, b.mv) 
+<pre style="height: 32px;">SELECT a.id, b.id, M_LCVS (a.mv, b.mv, 40) 
 FROM userVideos a, userVideos b;</pre>
 </div>
 <br><br>
@@ -239,8 +239,8 @@ Find the videos which could be taken car 'TRUMP001'.<br><br>
 <div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 48px;">
 SELECT a.id, b.id, a.mv
-FROM userVideos a, carTrajs b
-WHERE M_ANY(M_Intersects( a.mv, b.mt ) ) = true AND a.carnumber ='TRUMP001';
+FROM userVideos a, userTrajs b
+WHERE M_ANY(M_Intersects( a.mv, b.mt ) ) = true AND a.name ='TRUMP001';
 </pre>
 </div>
 <hr>
@@ -250,7 +250,7 @@ Find the videos in userVideos table which have the same movement trajectory duri
 <pre style="height: 48px;">
 SELECT a.id, b.id
 FROM userVideos a, userVideos b 
-WHERE M_LCSS( M_Slice(a.mv, 'Period(1100, 1150)'), M_Slice(b.mv, 'Period(1100, 1150)')) = 1;
+WHERE M_LCSS( M_Slice(a.mv, 'Period (1100, 1150)'), M_Slice(b.mv, 'Period (1100, 1150)'), 0.01, 40) = 1;
 </pre>
 </div>
 <br><br>
