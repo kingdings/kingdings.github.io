@@ -59,80 +59,78 @@
 
 
 <!-- Latest News -->
-<section class="feedback" id="testimonials">
 		<div class="container py-lg-5">
-		<h4 class="heading text-center mb-sm-5 mb-4">PostGeoMedia Installation</h4>		
+		<h4 class="heading text-center mb-sm-1 mb-5">PostGeoMedia Installation</h4>		
+
 		<h4 class=" text-left mb-sm-2">1.	Prepare Work</h4>
 		<hr>
-		<h6 style="font-size:15px;"> <pre>1.1	PostgreSQL 11
-1.2	Java and JDK 1.8
-1.3	Maven 3.3
-1.4	Checking
-	1. g++ --version   	success
-	2. javac -version 	success
-	3. pg_config	success
-	4. mvn -version	success
-</pre>
+		<h6 style="line-height:22px;font-size:13px; text-align:justify; text-justify:inter-ideograph;" class="mt-3"> 1.1	PostgreSQL 11<br>
+1.2	Java and JDK 1.8<br>
+1.3	Maven 3.3<br>
+1.4	Checking<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	1. g++ --version   	success<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	2. javac -version 	success<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	3. pg_config	success<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	4. mvn -version	success<br>
+</pre><br>
 </h6>
 <h4 class=" text-left mb-sm-2">2.	Installation of PL/Java</h4>
 <hr>
-<h6 style="font-size:15px;"> <pre>
-2.1	Installation
-	$ yum install java-1.8.0-openjdk-devel.x86_64
-	$ yum install 
-	$ yum install pljava-11.x86_64
-	1. Setting in PostgreSQL for PL/Java 
-		$cd /var/lib/pgsql/11/data
-		$vi postgresql.conf
-	2. Add the following lines for the pljava setting
-		pljava.classpath='/usr/pgsql-11/share/pljava/pljava-1.5.1.jar'
-		pljava.libjvm_location='/usr/lib/jvm/java-1.8.0-openjdk/jre/lib/amd64/server/libjvm.so'
-	3. Restart of PostgreSQL 
-		$systemctl restart postgresql-11.service
-	4. In psql or pgAdmin4
-		CREATE EXTENSION pljava;
-2.2	Build PL/java Source by Maven
-	1. $yum install postgresql-devel
-	2. $git clone https://github.com/tada/pljava.git
-	3. Move to pljava source 
-		$mvn clean install
-
-	[INFO] PostgreSQL PL/Java ................................ SUCCESS
-	[INFO] PL/Java API ....................................... SUCCESS
-	[INFO] PL/Java backend Java code ......................... SUCCESS
-	[INFO] PL/Java backend native code ....................... SUCCESS
-	[INFO] PL/Java Deploy .................................... SUCCESS
-	[INFO] PL/Java Ant tasks ................................. SUCCESS
-	[INFO] PL/Java examples .................................. SUCCESS
-	[INFO] PL/Java packaging ................................. SUCCESS
-
-	4. Make java source root (eg. /tmp/proj), create pom.xml (folder: /proj/pom)
-	5. In /tmp/proj 
-		$make clean package    
-
-	[INFO] Building jar: /tmp/proj/target/proj-0.0.1-SNAPSHOT.jar
-	[INFO] ------------------------------------------------------------------------
-	[INFO] BUILD SUCCESS
-	[INFO] ------------------------------------------------------------------------
-	[INFO] Total time: 3.600 s
-	[INFO] Finished at: 2019-06-05T12:54:16-04:00
-	[INFO] Final Memory: 17M/201M
-	[INFO] ------------------------------------------------------------------------
-
-	6. Add JTS library for SQL query and move the jar to folder /tmp/proj/target/
-		https://github.com/locationtech/jts/releases/tag/jts-1.15.0
-	7. In psql or pgAdmin4
-		select sqlj.install_jar('file:/tmp/proj/target/proj-0.0.1-SNAPSHOT.jar', 'jar1', true);
-		select sqlj.install_jar('file:/tmp/proj/target/jts-core-1.15.0-SNAPSHOT.jar', 'jar2', true);	
-		select sqlj.set_classpath('public', 'jar1:jar2');
-		select sqlj.get_classpath('public'); 
+<h6 style="line-height:22px;font-size:13px; text-align:justify; text-justify:inter-ideograph;" class="mt-3"> 
+2.1	Installation<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	$ yum install java-1.8.0-openjdk-devel.x86_64<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	$ yum install <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	$ yum install pljava-11.x86_64<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	1. Setting in PostgreSQL for PL/Java <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		$cd /var/lib/pgsql/11/data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		$vi postgresql.conf<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	2. Add the following lines for the pljava setting<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		pljava.classpath='/usr/pgsql-11/share/pljava/pljava-1.5.1.jar'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		pljava.libjvm_location='/usr/lib/jvm/java-1.8.0-openjdk/jre/lib/amd64/server/libjvm.so'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	3. Restart of PostgreSQL <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		$systemctl restart postgresql-11.service<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	4. In psql or pgAdmin4<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		CREATE EXTENSION pljava;<br>
+2.2	Build PL/java Source by Maven<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	1. $yum install postgresql-devel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	2. $git clone https://github.com/tada/pljava.git<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	3. Move to pljava source <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		$mvn clean install<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PostgreSQL PL/Java ................................ SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java API ....................................... SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java backend Java code ......................... SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java backend native code ....................... SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java Deploy .................................... SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java Ant tasks ................................. SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java examples .................................. SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java packaging ................................. SUCCESS<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	4. Make java source root (eg. /tmp/proj), create pom.xml (folder: /proj/pom)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	5. In /tmp/proj <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		$make clean package    <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] Building jar: /tmp/proj/target/proj-0.0.1-SNAPSHOT.jar<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] ------------------------------------------------------------------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] BUILD SUCCESS<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] ------------------------------------------------------------------------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] Total time: 3.600 s<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] Finished at: 2019-06-05T12:54:16-04:00<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] Final Memory: 17M/201M<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] ------------------------------------------------------------------------<br>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	6. Add JTS library for SQL query and move the jar to folder /tmp/proj/target/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		https://github.com/locationtech/jts/releases/tag/jts-1.15.0<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	7. In psql or pgAdmin4<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		select sqlj.install_jar('file:/tmp/proj/target/proj-0.0.1-SNAPSHOT.jar', 'jar1', true);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		select sqlj.install_jar('file:/tmp/proj/target/jts-core-1.15.0-SNAPSHOT.jar', 'jar2', true);	<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		select sqlj.set_classpath('public', 'jar1:jar2');<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		select sqlj.get_classpath('public'); <br>
 <!-- select sqlj.remove_jar('jar', true); select sqlj.remove_jar('jar2', true);-->
-	8. Finished.
-</pre>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	8. Finished.<br>
+</pre><br>
 </h6>
 <h4 class=" text-left mb-sm-2">3.	Function List and statement	</h4>
 <hr>
-<h6>
+
 <h6>
 <p align=center style="color:#000">Table
 1: Temporal Operations in PostGeoMedia</p></h6>
@@ -145,19 +143,19 @@
  <tr >
   <td width=70 style='width:52.3pt;border:solid windowtext 1.0pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
-  <p style="color:#000">Type </p>
+  <p style="color:#000; font-size:12px;">Type </p>
   </td>
   <td width=660 style='width:600pt;border:solid windowtext 1.0pt;border-left:
   none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
-  <p class=Para style="color:#000">Signature </p>
+  <p class=Para style="color:#000;font-size:12px;">Signature </p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:1;height:3.9pt'>
   <td width=70 rowspan=10 style='width:52.3pt;border:solid windowtext 1.0pt;
   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0in 5.4pt 0in 5.4pt;height:3.9pt'>
-  <p class=Para style="color:#000">Temporal</p>
+  <p class=Para style="color:#000;font-size:12px;">Temporal</p>
   </td>
   <td width=660 valign=top style='width:600pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -283,22 +281,22 @@ style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
  <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:12.7pt'>
   <td width=78 style='width:58.25pt;border:solid windowtext 1.0pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
-  <p class=Para style="color:#000">Type </p>
+  <p class=Para style="color:#000;font-size:12px;">Type </p>
   </td>
   <td width=242 style='width:600pt;border:solid windowtext 1.0pt;border-left:
   none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
-  <p class=Para style="color:#000">Signature </p>
+  <p class=Para style="color:#000;font-size:12px;">Signature </p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:1'>
   <td width=78 rowspan=18 style='width:58.25pt;border:solid windowtext 1.0pt;
   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0in 5.4pt 0in 5.4pt'>
-  <p class=Para style="color:#000">Spatial</p>
-  <p class=Para style="color:#000">and </p>
-  <p class=Para style="color:#000"><span class=SpellE>Spatio</span>-</p>
-  <p class=Para style="color:#000">temporal</p>
+  <p class=Para style="color:#000;font-size:12px;">Spatial</p>
+  <p class=Para style="color:#000;font-size:12px;">and </p>
+  <p class=Para style="color:#000;font-size:12px;"><span class=SpellE>Spatio</span>-</p>
+  <p class=Para style="color:#000;font-size:12px;">temporal</p>
   </td>
   <td width=242 valign=top style='width:600pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -524,19 +522,19 @@ Operations </p>
  mso-yfti-tbllook:1184;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
   <td width=72 style='width:53.75pt;border:solid windowtext 1.0pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
-  <p class=Para style="color:#000">Type </p>
+  <p class=Para style="color:#000;font-size:12px;">Type </p>
   </td>
   <td width=241 style='width:600pt;border:solid windowtext 1.0pt;border-left:
   none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
-  <p class=Para style="color:#000">Signature </p>
+  <p class=Para style="color:#000;font-size:12px;">Signature </p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:1'>
   <td width=72 rowspan=4 style='width:53.75pt;border:solid windowtext 1.0pt;
   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0in 5.4pt 0in 5.4pt'>
-  <p class=Para style="color:#000">Similarity</p>
+  <p class=Para style="color:#000;font-size:12px;">Similarity</p>
   </td>
   <td width=241 valign=top style='width:600pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -589,25 +587,23 @@ Operations </p>
 <br>
 <h4 class=" text-left mb-sm-2">4.	Install Function in PostgreSQL	</h4>
 <hr>
-<h6 style="font-size:15px;"> <pre>
-4.1	Create table
-	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/01.install/2.Install_mgeometry_tables.sql 
-4.2	Create type
-	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/01.install/1.Install_mgeometry_types.sql  
-4.3	Function based
-	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/01.install/3.Install_mgeometry_function_based.sql 
-4.4	Function mgeometry
-	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/01.install/4.Install_mgeometry_function_mgeometry.sql   
-4.5	Insert Data
-	http://gofile.me/4lVxW/UuCjL3xit 
-4.6	Test
-	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/03.example/1.Table_test.sql 
-	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/03.example/2.Function_test2.sql 
+<h6 style="line-height:22px;font-size:13px; text-align:justify; text-justify:inter-ideograph;" class="mt-3"> 
+4.1	Create table<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/01.install/2.Install_mgeometry_tables.sql <br>
+4.2	Create type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/01.install/1.Install_mgeometry_types.sql  <br>
+4.3	Function based<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/01.install/3.Install_mgeometry_function_based.sql <br>
+4.4	Function mgeometry<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/01.install/4.Install_mgeometry_function_mgeometry.sql   <br>
+4.5	Insert Data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	http://gofile.me/4lVxW/UuCjL3xit <br>
+4.6	Test<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/03.example/1.Table_test.sql <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/03.example/2.Function_test2.sql <br>
 
-</pre>
 </h6>
 		</div>
-</section>
 <!-- //Latest News -->
 
 <!-- copyright -->
