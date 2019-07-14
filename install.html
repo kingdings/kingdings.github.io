@@ -21,8 +21,8 @@
 			<div class="col-sm-6">
 				<ul class="d-lg-flex header-w3_pvt">
 					<li class="mr-lg-3">
-						<span class="fa fa-envelope-open"></span>
-						<a href="mailto:dingwei@kunsan.ac.kr" class="">dingwei@kunsan.ac.kr</a>
+						<!--<span class="fa fa-envelope-open"></span>
+						<a href="mailto:dingwei@kunsan.ac.kr" class="">dingwei@kunsan.ac.kr</a>-->
 					</li>
 				</ul>
 			</div>		
@@ -41,7 +41,7 @@
 			<input type="checkbox" id="drop" />
 			<ul class="menu mt-2 ml-auto">
 				<li class="active"><a href="index.html">Home</a></li>				
-				<li class=""><a href="install.html">Installing and configuring</a></li>
+				<li class=""><a href="install.html">Installation</a></li>
 				<li class=""><a href="tutorials.html">Tutorials</a></li>
 				<li class=""><a href="mailto:dingwei@kunsan.ac.kr">Contact Us</a></li>
 			</ul>
@@ -52,7 +52,7 @@
 <!-- banner -->
 <div style="background-color:#000; height:70px;">
 		<div class="container" style="color:#fff;margin-top:70px;"><br>
-			<span>You Are Here » <a href="index.html">Home</a> » Installing and configuring</span>
+			<span>You Are Here » <a href="index.html">Home</a> » Installation</span>
 		</div>
 </div>
 <!-- //banner -->
@@ -61,10 +61,10 @@
 <!-- Latest News -->
 <section class="feedback" id="testimonials">
 		<div class="container py-lg-5">
-		<h3 class="heading text-center mb-sm-5 mb-4">PostGeoMedia Installation</h3>		
+		<h4 class="heading text-center mb-sm-5 mb-4">PostGeoMedia Installation</h4>		
 		<h4 class=" text-left mb-sm-2">1.	Prepare Work</h4>
 		<hr>
-		<h5 class=" text-left mb-sm-2"><pre>1.1	PostgreSQL 11
+		<h6 style="font-size:15px;"> <pre>1.1	PostgreSQL 11
 1.2	Java and JDK 1.8
 1.3	Maven 3.3
 1.4	Checking
@@ -73,10 +73,10 @@
 	3. pg_config	success
 	4. mvn -version	success
 </pre>
-</h5>
+</h6>
 <h4 class=" text-left mb-sm-2">2.	Installation of PL/Java</h4>
 <hr>
-<h5 class=" text-left mb-sm-2"><pre>
+<h6 style="font-size:15px;"> <pre>
 2.1	Installation
 	$ yum install java-1.8.0-openjdk-devel.x86_64
 	$ yum install 
@@ -129,43 +129,41 @@
 <!-- select sqlj.remove_jar('jar', true); select sqlj.remove_jar('jar2', true);-->
 	8. Finished.
 </pre>
-</h5>
+</h6>
 <h4 class=" text-left mb-sm-2">3.	Function List and statement	</h4>
 <hr>
-<h5 class=" text-left mb-sm-2">
+<h6>
+<h6>
+<p align=center style="color:#000">Table
+1: Temporal Operations in PostGeoMedia</p></h6>
 
-<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
-text-align:center;line-height:150%'><b style='mso-bidi-font-weight:normal'><span
-style='font-size:15.0pt;line-height:150%;font-family:"Times New Roman",serif'>Table
-1: Temporal Operations in <span class=SpellE>PostGeoMedia</span><o:p></o:p></span></b></p>
+<div align=center style="font-size:12px;">
 
-<div align=center>
-
-<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
+<table border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
  mso-yfti-tbllook:1184;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
- <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:12.7pt'>
+ <tr >
   <td width=70 style='width:52.3pt;border:solid windowtext 1.0pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
-  <p class=Para>Type </p>
+  <p style="color:#000">Type </p>
   </td>
   <td width=660 style='width:600pt;border:solid windowtext 1.0pt;border-left:
   none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
-  <p class=Para>Signature </p>
+  <p class=Para style="color:#000">Signature </p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:1;height:3.9pt'>
   <td width=70 rowspan=10 style='width:52.3pt;border:solid windowtext 1.0pt;
   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0in 5.4pt 0in 5.4pt;height:3.9pt'>
-  <p class=Para>Temporal</p>
+  <p class=Para style="color:#000">Temporal</p>
   </td>
   <td width=660 valign=top style='width:600pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.9pt'>
-  <span class=SpellE><span class=SpellE>M_At</span></span><span
+ <span class=SpellE><span class=SpellE>M_At</span></span><span
   class=SpellE> (<span class=SpellE>mgeo</span>,
   n) →<span class=SpellE>mgeo</span><sup>+</sup><o:p></o:p></span>
   </td>
@@ -261,8 +259,8 @@ style='font-size:15.0pt;line-height:150%;font-family:"Times New Roman",serif'>Ta
  class=SpellE> (<span class=SpellE>mgeo</span>,
   period) →</span><span class=SpellE>bool</span><sup><span
   class=SpellE>+<o:p></o:p></span></sup>
-  <sup><span>(Also, CONTAINS,
-  EQUALS, PRECEDES, SUCCEEDS, IMMEDIATELY PRECEDES, and IMMEDIATELY SUCCEEDS)</span></sup><span
+  (Also, CONTAINS,
+  EQUALS, PRECEDES, SUCCEEDS, IMMEDIATELY PRECEDES, and IMMEDIATELY SUCCEEDS)<span
   style='font-size:8.0pt;font-family:"Times New Roman"'><o:p></o:p></span>
   </td>
  </tr>
@@ -274,12 +272,10 @@ style='font-size:15.0pt;line-height:150%;font-family:"Times New Roman",serif'>Ta
 text-align:center;line-height:150%'><b style='mso-bidi-font-weight:normal'><span
 style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
 
-<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
-text-align:center;line-height:150%'><b style='mso-bidi-font-weight:normal'><span
-style='font-size:15.0pt;line-height:150%;font-family:"Times New Roman",serif'>Table
-2: Spatial and Spatiotemporal Operations in <span class=SpellE>PostGeoMedia</span><o:p></o:p></span></b></p>
+<p align=center style="color:#000">Table
+2: Spatial and Spatiotemporal Operations in PostGeoMedia</p>
 
-<div align=center>
+<div align=center style="font-size:12px;">
 
 <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
@@ -287,22 +283,22 @@ style='font-size:15.0pt;line-height:150%;font-family:"Times New Roman",serif'>Ta
  <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:12.7pt'>
   <td width=78 style='width:58.25pt;border:solid windowtext 1.0pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
-  <p class=Para>Type </p>
+  <p class=Para style="color:#000">Type </p>
   </td>
   <td width=242 style='width:600pt;border:solid windowtext 1.0pt;border-left:
   none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
-  <p class=Para>Signature </p>
+  <p class=Para style="color:#000">Signature </p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:1'>
   <td width=78 rowspan=18 style='width:58.25pt;border:solid windowtext 1.0pt;
   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0in 5.4pt 0in 5.4pt'>
-  <p class=Para>Spatial</p>
-  <p class=Para>and </p>
-  <p class=Para><span class=SpellE>Spatio</span>-</p>
-  <p class=Para>temporal</p>
+  <p class=Para style="color:#000">Spatial</p>
+  <p class=Para style="color:#000">and </p>
+  <p class=Para style="color:#000"><span class=SpellE>Spatio</span>-</p>
+  <p class=Para style="color:#000">temporal</p>
   </td>
   <td width=242 valign=top style='width:600pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -520,35 +516,27 @@ style='font-size:15.0pt;line-height:150%;font-family:"Times New Roman",serif'>Ta
 text-align:center;line-height:normal'><b style='mso-bidi-font-weight:normal'><span
 style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
 
-<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
-text-align:center;line-height:150%'><b style='mso-bidi-font-weight:15.0pt'><span
-style='font-size:15.0pt;line-height:150%;font-family:"Times New Roman",serif'>Table 3: Trajectory Similarity
-Operations <o:p></o:p></span></b></p>
-<div align=center>
+<p align=center style="color:#000">Table 3: Trajectory Similarity
+Operations </p>
+<div align=center style="font-size:12px;">
 <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
  mso-yfti-tbllook:1184;mso-padding-alt:0in 5.4pt 0in 5.4pt'>
   <td width=72 style='width:53.75pt;border:solid windowtext 1.0pt;mso-border-alt:
   solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
-  <p class=Para style='mso-element:frame;mso-element-frame-hspace:7.1pt;
-  mso-element-wrap:around;mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:
-  margin;mso-element-top:4.6pt;mso-height-rule:exactly'>Type </p>
+  <p class=Para style="color:#000">Type </p>
   </td>
   <td width=241 style='width:600pt;border:solid windowtext 1.0pt;border-left:
   none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0in 5.4pt 0in 5.4pt;height:12.7pt'>
-  <p class=Para style='mso-element:frame;mso-element-frame-hspace:7.1pt;
-  mso-element-wrap:around;mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:
-  margin;mso-element-top:4.6pt;mso-height-rule:exactly'>Signature </p>
+  <p class=Para style="color:#000">Signature </p>
   </td>
  </tr>
  <tr style='mso-yfti-irow:1'>
   <td width=72 rowspan=4 style='width:53.75pt;border:solid windowtext 1.0pt;
   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0in 5.4pt 0in 5.4pt'>
-  <p class=Para style='mso-element:frame;mso-element-frame-hspace:7.1pt;
-  mso-element-wrap:around;mso-element-anchor-vertical:paragraph;mso-element-anchor-horizontal:
-  margin;mso-element-top:4.6pt;mso-height-rule:exactly'>Similarity</p>
+  <p class=Para style="color:#000">Similarity</p>
   </td>
   <td width=241 valign=top style='width:600pt;border-top:none;border-left:
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -597,10 +585,11 @@ Operations <o:p></o:p></span></b></p>
   </td>
  </tr>
 </table></div>
-</h5>
+</h6>
+<br>
 <h4 class=" text-left mb-sm-2">4.	Install Function in PostgreSQL	</h4>
 <hr>
-<h5 class=" text-left mb-sm-2"><pre>
+<h6 style="font-size:15px;"> <pre>
 4.1	Create table
 	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/01.install/2.Install_mgeometry_tables.sql 
 4.2	Create type
@@ -616,7 +605,7 @@ Operations <o:p></o:p></span></b></p>
 	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/03.example/2.Function_test2.sql 
 
 </pre>
-</h5>
+</h6>
 		</div>
 </section>
 <!-- //Latest News -->

@@ -21,8 +21,8 @@
 			<div class="col-sm-6">
 				<ul class="d-lg-flex header-w3_pvt">
 					<li class="mr-lg-3">
-						<span class="fa fa-envelope-open"></span>
-						<a href="mailto:dingwei@kunsan.ac.kr" class="">dingwei@kunsan.ac.kr</a>
+						<!--<span class="fa fa-envelope-open"></span>
+						<a href="mailto:dingwei@kunsan.ac.kr" class="">dingwei@kunsan.ac.kr</a>-->
 					</li>
 				</ul>
 			</div>		
@@ -41,7 +41,7 @@
 			<input type="checkbox" id="drop" />
 			<ul class="menu mt-2 ml-auto">
 				<li class="active"><a href="index.html">Home</a></li>
-				<li class=""><a href="install.html">Installing and configuring</a></li>
+				<li class=""><a href="install.html">Installation</a></li>
 				<li class=""><a href="tutorials.html">Tutorials</a></li>
 				<li class=""><a href="mailto:dingwei@kunsan.ac.kr">Contact Us</a></li>
 			</ul>
@@ -59,193 +59,22 @@
 
 
 <!-- Latest News -->
-<section class="feedback" id="testimonials">
+<section>
 		<div class="container py-lg-5">	
 		<h4 class=" text-left mb-sm-2">Extensible data types</h4>
 		<hr>
-		<h6 class=" text-left mb-sm-2">PostGeoMedia contains many spatial data types, such as 
+		<h6 style="line-height:22px; font-size:13px; text-align:justify; text-justify:inter-ideograph;" class="mt-3">PostGeoMedia contains many spatialtemporal data types, such as 
 MPoint, MPolygon, MVideo, MPhoto, FOV, MDouble etc. Each data types stores the spatialtemporal
-information. All datas are two-dimensional in the Euclidean space. Taking the formal definition intuitively, our PostGeoMedia type uses the following features.<br><br>
+information. All datas are two-dimensional in the Euclidean space. Taking the formal definition intuitively, our PostGeoMedia type uses the following features.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	Each object is a sequence of timestamp-value pairs. <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	PostGeoMedia object must follow the Open Geospatial Consortium (OGC) moving feature standards.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	PostGeoMedia object can be of the different types (i.e., points, polygons, photo, video, double and so on). 
-
-<hr>
-PostGeoMedia object is a spatiotemporal concept. The data are composed of timestamp-value pairs, where each pair represents the spatial location of the media object at a specific time instant. For clear, the type defined as follow. 
-<br><br>
-<div style="background-color: #EDEDDF; padding-top:20px;padding-bottom:20px;padding-left:100px;">
-<pre style="height: 120px;">
-CREATE TYPE mdouble AS
-(
-	id oid,
-	segid  text,
-	doubles double precision[],
-	timeline timestamp without time zone[],
-	interpolation json
-);
-
-CREATE TYPE point AS
-(
-	pointx real,
-	pointy real
-);
-
-CREATE TYPE mpoint AS
-(
-	id oid,
-	segid  text,
-	coordinates point[],
-	timeline timestamp without time zone[],
-	interpolation json
-);
-
-CREATE TYPE mbool AS
-(
-	id oid,
-	segid  text,
-	bools boolean[],
-	timeline timestamp without time zone[],
-	interpolation json
-);
-
-CREATE TYPE mpolygon AS
-(
-	id oid,
-	segid  text,
-	polygons polygon[],
-	timeline timestamp without time zone[],
-	interpolation json
-);
-
-CREATE TYPE mphoto AS
-(
-	id oid,
-	segid  text,
-	uri text[],
-	width integer[],
-	height integer[],
-	altitude double precision[],
-	times timestamp without time zone[],
-	annotations json,
-	points point[],
-	viewAngle double precision[],
-	verticalAngle double precision[],
-	direction double precision[],
-	distance double precision[],
-	direction3d double precision[]
-	---fov FoV[]
-);
-
-CREATE TYPE mvideo AS
-(
-	id oid,
-	segid  text,
-	uri text[],
-	altitude double precision[],
-	times timestamp without time zone[],
-	annotations json[],
-	points point[],
-	viewAngle double precision[],
-	verticalAngle double precision[],
-	direction double precision[],
-	distance double precision[],
-	direction3d double precision[]
-	---fov FoV[]
-);
-
-CREATE TYPE stphoto AS
-(
-	id oid,
-	segid  text,
-	uri text,
-	width integer,
-	height integer,
-	altitude double precision,
-	times timestamp without time zone,
-	annotations json,
-	points point,
-	viewAngle double precision,
-	verticalAngle double precision,
-	direction double precision,
-	distance double precision,
-	direction3d double precision
-	---fov FoV
-);
-
-CREATE TYPE mduration AS
-(
-	id oid,
-	segid  text,
-	duration bigint[],
-	interpolation json
-);
-
-CREATE TYPE minstant AS
-(
-	id oid,
-	segid  text,
-	instant timestamp without time zone[],
-	interpolation json
-);
-
-CREATE TYPE mint AS
-(
-	id oid,
-	segid  text,
-	counts integer[],
-	interpolation json
-);
-
-CREATE TYPE mmultipoint AS
-(
-	id oid,
-	segid  text,
-	moints point[],
-	times timestamp without time zone[],
-	interpolation json
-);
-
-CREATE TYPE mstring AS
-(
-	id oid,
-	segid  text,
-	mstrings text[],
-	times timestamp without time zone[],
-	interpolation json
-);
-
-CREATE TYPE mlinestring AS
-(
-	id oid,
-	segid  text,
-	mlinestrings text[],
-	times timestamp without time zone[],
-	interpolation json
-);
-
-CREATE TYPE mperiod AS
-(
-	id oid,
-	segid  text,
-	fromtime bigint[],
-	totime bigint[],
-	interpolation json
-);
-
-
-CREATE TYPE period AS
-(
-	fromtime bigint,
-	totime bigint
-);
-</pre>
-</div>
-
-</h6><br>
+</h6>
+<br>
 
 <h4 class=" text-left mb-sm-2">Examples types</h4>
 <hr>
-<h6 class=" text-left mb-sm-2">
+<h6 style="line-height:22px; font-size:13px; text-align:justify; text-justify:inter-ideograph;"  class="mt-3">
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	MPoint: ((40.67 -73. 83) 1000, (40.74, -73.99) 2000).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	STPhoto: ('http://u-gis.net/p1.jpg' (40.74, -73.99) 1000 60 13.15 10).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	MPhoto: (('http://u-gis.net/p1.jpg' (40.74, -73.99) 1000 60 13.15 10), ('http://u-gis.net/p2.jpg' (40.75, -73.93) 2000 60 13.23 10)).<br>
@@ -255,24 +84,62 @@ CREATE TYPE period AS
 </h6>
 <h4 class=" text-left mb-sm-2">Extensible operations</h4>
 <hr>
-<h6 class=" text-left mb-sm-2">
+<h6 style="line-height:22px; font-size:13px; text-align:justify; text-justify:inter-ideograph;" class="mt-3">
 Operations in PostGeoMedia are implemented as PL/Java functions. In this tutorial, we will take you with a step by step intructions to use these spatialtemporal operations.
 <br><br>
 
 </h6>
 <h4 class=" text-left mb-sm-2">Table creation and data update	</h4>
 <hr>
-<h6 class=" text-left mb-sm-2">
+<h6 style="line-height:22px; font-size:13px; text-align:justify; text-justify:inter-ideograph;" class="mt-3">
 The category of operations is used in creating and updating statements to change the recorded moving media data. We consider the following relational schema for example table userVideos, userTrajs and city that stores basic information.
-<br><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	userVideos (id: int, name: text,  mv: mvideo)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	carTrajs (id: int, carnumber: text, mt: mpoint)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	carSensors( id:int, carnumber:text, accX: mdouble, 
-                       accY:mdouble, accZ:mdouble)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	city (id: int, name: text, geo: polygon) 
+<br>
+</h6>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;">
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+CREATE TABLE userTrajs (      CREATE TABLE userSensors(       CREATE TABLE userVideos (       CREATE TABLE city(
+	id	integer,            id	integer,                  id	integer,              id	integer,
+   	carnumber  text);          carnumber	text);             name  text);                   name	text,
+                                                                                                  geo	polygon);
+	
+</pre>
+</div>
+</h6>
 <hr>
-Append current two moving points data into car 1’s trajectory in carTrajs table<br><br>
-<div style="background-color: #EDEDDF; padding-top:20px;padding-bottom:20px;padding-left:100px;">
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;">
+Add spatialtemporal data types into tables.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+select addmgeometrycolumn('public','usertrajs','mt',4326,'mpoint',2, 50);
+select addmgeometrycolumn('public','usersensors','md_accx',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','md_accy',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','md_accz',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','md_gyrox',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','md_gyroy',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','md_gyroz',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','uservideos','mv',4326,'mvideo',2, 3000);
+
+</pre>
+</div>
+
+</h6>
+<hr>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;">
+Insert data into tables.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>insert into usertrajs (id, carnumber) values( 1, '0000f77c-62c2a288.mov');
+insert into usersensors (id, carnumber) values( 1, '0000f77c-62c2a288.mov');
+insert into uservideos (id, name) values( 1, '0000f77c-62c2a288.mov');
+
+</pre>
+</div>
+
+</h6>
+<hr>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;">
+Append current two moving points data into car 1’s trajectory in carTrajs table.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 48px;">
 UPDATE carTrajs
 SET mt = M_Append (mt, 'MPOINT ((40.67 -73. 83) 1000,(41.67 -73.81) 2000)')
@@ -283,18 +150,18 @@ WHERE id = 1;
 </h6>
 <h4 class=" text-left mb-sm-2">Temporal queries	</h4>
 <hr>
-<h6 class=" text-left mb-sm-2">
-Retrieve videos in userVideos table which are taken during 'period (1100, 1200)'<br><br>
-<div style="background-color: #EDEDDF; padding-top:20px;padding-bottom:20px;padding-left:100px;">
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;">
+Retrieve videos in userVideos table which are taken during 'period (1100, 1200)'.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 48px;">
 SELECT id, mv
 FROM userVideos
 WHERE M_Overlaps(mv, 'Period (1100, 1150)'); </pre>
 </div>
 <hr>
-<h6 class=" text-left mb-sm-2">
-Retrieve videos in userVideos table which are taken during 'period (1100, 1150)', returns the sliced video files by 'period (1100, 1200)'<br><br>
-<div style="background-color: #EDEDDF; padding-top:20px;padding-bottom:20px;padding-left:100px;">
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Retrieve videos in userVideos table which are taken during 'period (1100, 1150)', returns the sliced video files by 'period (1100, 1200)'.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 48px;">
 SELECT id, M_Slice( mv, 'Period (1100, 1200)')
 FROM userVideos
@@ -303,18 +170,18 @@ WHERE M_Overlaps(mv, 'Period (1100, 1150)');</pre>
 <br><br>
 <h4 class=" text-left mb-sm-2">Spatial and spatiotemporal queries	</h4>
 <hr>
-<h6 class=" text-left mb-sm-2">
-Retrieve videos in userVideos table which have entered the city 'New York' <br><br>
-<div style="background-color: #EDEDDF; padding-top:20px;padding-bottom:20px;padding-left:100px;">
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Retrieve videos in userVideos table which have entered the city 'New York'. <br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 48px;">
 SELECT id, name, mv
 FROM carTrajs a, city c
 WHERE M_Enters(a.mt, c.geo ) = true AND c.name='New York';</pre>
 </div>
 <hr>
-<h6 class=" text-left mb-sm-2">
-Retrieve the cars in userTrajs table that have left from city ‘New York’ during 'period (1100, 1200)'<br><br>
-<div style="background-color: #EDEDDF; padding-top:20px;padding-bottom:20px;padding-left:100px;">
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Retrieve the cars in userTrajs table that have left from city ‘New York’ during 'period (1100, 1200)'.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 48px;">
 SELECT id, carnumber
 FROM carTrajs a, city c
@@ -322,9 +189,9 @@ WHERE  M_Leaves(M_Slice(a.mt,'Period(1100, 1200)'), c.geo) = true AND c.name = '
 </pre>
 </div>
 <hr>
-<h6 class=" text-left mb-sm-2">
-Retrieve the cars in userTrajs table that traveled up to 500m from central New York city<br><br>
-<div style="background-color: #EDEDDF; padding-top:20px;padding-bottom:20px;padding-left:100px;">
+<h6 style=" font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Retrieve the cars in userTrajs table that traveled up to 500m from central New York city.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 65px;">SELECT id, carnumber
 FROM carTrajs a 
 WHERE  M_Max( M_Distance( a.mt, 'POLYGON
@@ -333,31 +200,32 @@ WHERE  M_Max( M_Distance( a.mt, 'POLYGON
 <br><br>
 <h4 class=" text-left mb-sm-2">Similarity queries	</h4>
 <hr>
-<h6 class=" text-left mb-sm-2">
-Return LCVS similarity distances between two videos in userVideos table<br><br>
-<div style="background-color: #EDEDDF; padding-top:20px;padding-bottom:20px;padding-left:100px;">
+<h6 style=" font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Return LCVS similarity distances between two videos in userVideos table.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 32px;">SELECT a.id, b.id, M_LCVS (a.mv, b.mv) 
 FROM userVideos a, userVideos b;</pre>
 </div>
 <br><br>
 <h4 class=" text-left mb-sm-2">FOV queries	</h4>
 <hr>
-<h6 class=" text-left mb-sm-2">
-Retrieve FOVs from userVideos table<br><br>
-<div style="background-color: #EDEDDF; padding-top:20px;padding-bottom:20px;padding-left:100px;">
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Retrieve FOVs from userVideos table.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 32px;">
 SELECT id, M_FOV(mv) 
 FROM userVideos;
 </pre>
 </div>
 <hr>
-<h6 class=" text-left mb-sm-2">
-Retrieve FOVs in userVideos table that the shortest distance is less than 10m<br><br>
-<div style="background-color: #EDEDDF; padding-top:20px;padding-bottom:20px;padding-left:100px;">
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Retrieve FOVs in userVideos table that the shortest distance is less than 10m.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 48px;">
 SELECT a.id, b.id, M_FOV(a.mv), M_FOV(b.mv)
 FROM userVideos a, userVideos b 
-WHERE M_DWithin(a.mv, a.mv, 10);</pre>
+WHERE M_DWithin(a.mv, a.mv, 10);
+</pre>
 </div>
 <br><br>
 
@@ -366,9 +234,9 @@ WHERE M_DWithin(a.mv, a.mv, 10);</pre>
 
 <h4 class=" text-left mb-sm-2">Join queries	</h4>
 <hr>
-<h6 class=" text-left mb-sm-2">
-Find the videos which could be taken car 'TRUMP001'<br><br>
-<div style="background-color: #EDEDDF; padding-top:20px;padding-bottom:20px;padding-left:100px;">
+<h6 style="font-size:13px;">
+Find the videos which could be taken car 'TRUMP001'.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 48px;">
 SELECT a.id, b.id, a.mv
 FROM userVideos a, carTrajs b
@@ -376,9 +244,9 @@ WHERE M_ANY(M_Intersects( a.mv, b.mt ) ) = true AND a.carnumber ='TRUMP001';
 </pre>
 </div>
 <hr>
-<h6 class=" text-left mb-sm-2">
-Find the videos in userVideos table which have the same movement trajectory during 'period (1100, 1150)'<br><br>
-<div style="background-color: #EDEDDF; padding-top:20px;padding-bottom:20px;padding-left:100px;">
+<h6 style="font-size:13px;">
+Find the videos in userVideos table which have the same movement trajectory during 'period (1100, 1150)'.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 48px;">
 SELECT a.id, b.id
 FROM userVideos a, userVideos b 
