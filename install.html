@@ -105,8 +105,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java examples .................................. SUCCESS<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java packaging ................................. SUCCESS<br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	4. Make java source root (eg. /tmp/proj), create pom.xml (folder: /proj/pom)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	5. In /tmp/proj <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	4. Make java source root (eg. /tmp/proj), copy files from (https://github.com/awarematics/mgeometry/tree/master/PostgreSQL/04.proj) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	5. In the path: /tmp/proj <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		$make clean package    <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] Building jar: /tmp/proj/target/proj-0.0.1-SNAPSHOT.jar<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] ------------------------------------------------------------------------<br>
@@ -117,11 +117,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] Final Memory: 17M/201M<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] ------------------------------------------------------------------------<br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	6. Add JTS library for SQL query and move the jar to folder /tmp/proj/target/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	6. Add JTS library for SQL query and move the jar to a folder (eg. /tmp/), the jar file can be download from this website:/<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		https://github.com/locationtech/jts/releases/tag/jts-1.15.0<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	7. In psql or pgAdmin4<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	7. In psql or pgAdmin4, install java library<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		select sqlj.install_jar('file:/tmp/proj/target/proj-0.0.1-SNAPSHOT.jar', 'jar1', true);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		select sqlj.install_jar('file:/tmp/proj/target/jts-core-1.15.0-SNAPSHOT.jar', 'jar2', true);	<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		select sqlj.install_jar('file:/tmp/jts-core-1.15.0-SNAPSHOT.jar', 'jar2', true);	<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		select sqlj.set_classpath('public', 'jar1:jar2');<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		select sqlj.get_classpath('public'); <br>
 <!-- select sqlj.remove_jar('jar', true); select sqlj.remove_jar('jar2', true);-->
@@ -589,18 +589,23 @@ Operations </p>
 <hr>
 <h6 style="line-height:22px;font-size:13px; text-align:justify; text-justify:inter-ideograph;" class="mt-3"> 
 4.1	Create table<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/01.install/2.Install_mgeometry_tables.sql <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/1_table.sql <br>
 4.2	Create type<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/01.install/1.Install_mgeometry_types.sql  <br>
-4.3	Function based<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/01.install/3.Install_mgeometry_function_based.sql <br>
-4.4	Function mgeometry<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/01.install/4.Install_mgeometry_function_mgeometry.sql   <br>
-4.5	Insert Data<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	http://gofile.me/4lVxW/UuCjL3xit <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/2_type.sql <br>
+4.3	Create trigger<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/3_trigger.sql <br>
+4.4	Function based<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/4_addMGeometryColumns.sql <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/5_appendMGeoemtryData.sql <br>
+4.5	Function mgeometry<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/6_functionMGeometry.sql   <br>
 4.6	Test<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/03.example/1.Table_test.sql <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/ding/PostgreSQL/03.example/2.Function_test2.sql <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/03.example/1_createTable.sql <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/tree/master/PostgreSQL/03.example/2_insertTableData <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	https://github.com/awarematics/mgeometry/tree/master/PostgreSQL/03.example/3_insertMGeometryData <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/03.example/4_testQuery.sql <br>
+4.7	Insert All BDD-100k NewYork City Data<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	http://gofile.me/4lVxW/UuCjL3xit <br>
 
 </h6>
 		</div>
