@@ -93,8 +93,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		CREATE EXTENSION pljava;<br>
 2.2	Build PL/java Source by Maven<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	1. $yum install postgresql-devel<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	2. $git clone https://github.com/tada/pljava.git<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	3. Move to pljava source <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	2. $visit https://github.com/tada/pljava/releases/tag/V1_5_2 and download the source (.zip), unzip files in root: /tmp/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	3. Change the pljava folder name (pljava_1.5.2 to pljava) and move to pljava folder(cd /tmp/pljava)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		$mvn clean install<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PostgreSQL PL/Java ................................ SUCCESS<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java API ....................................... SUCCESS<br>
@@ -105,7 +105,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java examples .................................. SUCCESS<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java packaging ................................. SUCCESS<br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	4. Make java source root (eg. /tmp/proj), copy files from (https://github.com/awarematics/mgeometry/tree/master/PostgreSQL/04.proj) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	4. Make java source root (eg. /tmp/proj), copy all files from (https://github.com/awarematics/mgeometry/tree/master/PostgreSQL/04.proj) <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	5. In the path: /tmp/proj <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		$make clean package    <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] Building jar: /tmp/proj/target/proj-0.0.1-SNAPSHOT.jar<br>
@@ -117,7 +117,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] Final Memory: 17M/201M<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] ------------------------------------------------------------------------<br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	6. Add JTS library for SQL query and move the jar to a folder (eg. /tmp/), the jar file can be download from this website:/<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	6. Add JTS library (jts-core-1.15.0-SNAPSHOT.jar)for SQL query and move the jar to a folder (eg. /tmp/), the jar file can be download from this website (jts-release-1.15.0-bin.zip):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		https://github.com/locationtech/jts/releases/tag/jts-1.15.0<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	7. In psql or pgAdmin4, install java library<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		select sqlj.install_jar('file:/tmp/proj/target/proj-0.0.1-SNAPSHOT.jar', 'jar1', true);<br>
