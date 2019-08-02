@@ -123,6 +123,8 @@ CREATE TABLE userVideos
    	name  text
 );
 select addmgeometrycolumn('public','uservideos','mv',4326,'mvideo',2, 3000);
+
+
 </pre>
 </div>
 </h6>
@@ -249,7 +251,7 @@ WHERE id = 1;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:3.9pt'>
  <span class=SpellE><span class=SpellE>M_Snapshot</span></span><span
   class=SpellE> (<span class=SpellE>mgeo</span>,
-  instant) →<span class=SpellE>mgeo</span><sup>+</sup><o:p></o:p></span>
+  instant) →<span class=SpellE>geometry</span><o:p></o:p></span>
   </td>
  </tr>
  <tr style='mso-yfti-irow:8;height:3.9pt'>
@@ -277,12 +279,12 @@ WHERE id = 1;
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:6.0pt'>
- <span class=SpellE><span class=SpellE>M_Overlaps</span></span><span
+ <span class=SpellE><span class=SpellE>M_tOverlaps</span></span><span
  class=SpellE> (<span class=SpellE>mgeo</span>,
   period) →</span><span class=SpellE>bool</span><sup><span
   class=SpellE>+<o:p></o:p></span></sup>
-  (Also, CONTAINS,
-  EQUALS, PRECEDES, SUCCEEDS, IMMEDIATELY PRECEDES, and IMMEDIATELY SUCCEEDS)<span
+  (Also, tINTERSECTS, tCONTAINS,
+  tEQUALS, tPRECEDES, tSUCCEEDS, tIMMEDIATELYPRECEDES, and tIMMEDIATELYSUCCEEDS)<span
   style='font-size:8.0pt;font-family:"Times New Roman"'><o:p></o:p></span>
   </td>
  </tr>
@@ -348,11 +350,66 @@ style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
   none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
-  <span class=SpellE>M_Intersects</span>
+  <span class=SpellE>M_mIntersects</span>
   (<span class=SpellE>mgeo</span>, <span class=SpellE>mgeo</span>) <span
   style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
   mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span><span
-  class=SpellE>mbool</span>
+  class=SpellE>mbool   M_mIntersects (mgeo, geo) →mbool</span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE>M_mEnters</span> (<span
+  class=SpellE>mgeo</span>, geo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>mbool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE>M_mBypasses</span> (<span
+  class=SpellE>mgeo</span>, geo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>mbool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE>M_mStayIn</span> (<span
+  class=SpellE>mgeo</span>, geo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>mbool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+<span class=SpellE>M_mLeaves</span> (<span
+  class=SpellE>mgeo</span>, geo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>mbool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span class=SpellE>M_mCrosses</span> (<span
+  class=SpellE>mgeo</span>, geo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>mbool
   </td>
  </tr>
  <tr style='mso-yfti-irow:4'>
@@ -372,6 +429,17 @@ style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
  <span class=SpellE>M_Bypasses</span> (<span
+  class=SpellE>mgeo</span>, geo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>bool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE>M_StayIn</span> (<span
   class=SpellE>mgeo</span>, geo) <span style='font-family:"Calibri",sans-serif;
   mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
   mso-bidi-font-family:"Times New Roman"'>→</span>bool
@@ -420,7 +488,62 @@ style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
   (<span class=SpellE>mgeo</span>, <span class=SpellE>mgeo</span>) <span
   style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
   mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span><span
-  class=SpellE>mstring</span>
+  class=SpellE>mstring  M_Relationship (mgeo, geo) →mdouble</span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE>M_Inside</span> (<span
+  class=SpellE>mgeo</span>, mgeo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>mbool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:5'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE>M_Equal</span> (<span
+  class=SpellE>mgeo</span>, mgeo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>mbool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:4'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+ <span class=SpellE>M_Overlaps</span> (<span
+  class=SpellE>mgeo</span>, mgeo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>mbool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:6'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+<span class=SpellE>M_Disjoint</span> (<span
+  class=SpellE>mgeo</span>, mgeo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>mbool
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:7'>
+  <td width=242 valign=top style='width:600pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
+  <span class=SpellE>M_Meet</span> (<span
+  class=SpellE>mgeo</span>, mgeo) <span style='font-family:"Calibri",sans-serif;
+  mso-ascii-font-family:"Linux Libertine";mso-hansi-font-family:"Linux Libertine";
+  mso-bidi-font-family:"Times New Roman"'>→</span>mbool
   </td>
  </tr>
  <tr style='mso-yfti-irow:10'>
@@ -430,7 +553,7 @@ style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
   <span class=SpellE><span class=SpellE>M_Distance</span></span><span
   class=SpellE> (<span class=SpellE>mgeo</span>,
-  <span class=SpellE>mgeo</span>) →<span class=SpellE>mdouble</span><o:p></o:p></span>
+  <span class=SpellE>mgeo</span>) →<span class=SpellE>mdouble   M_Distance (mgeo, geo) →mdouble</span><o:p></o:p></span>
   </td>
  </tr>
  <tr style='mso-yfti-irow:11'>
@@ -483,10 +606,10 @@ style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.55pt'>
   <span class=SpellE>M_<span class=GramE>Max</span></span><span
-  class=GramE>( {</span><span class=SpellE>mdouble</span>, mint} ) <span
+  class=GramE>(</span><span class=SpellE>mdouble</span>) <span
   style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
   mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
-  {<span class=SpellE>double,int</span> }
+  <span class=SpellE>double</span>
   </td>
  </tr>
  <tr style='mso-yfti-irow:16;height:19.55pt'>
@@ -495,10 +618,10 @@ style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:19.55pt'>
   <span class=SpellE>M_<span class=GramE>Min</span></span><span
-  class=GramE>( {</span><span class=SpellE>mdouble</span>, mint} ) <span
+  class=GramE>(</span><span class=SpellE>mdouble</span>) <span
   style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
   mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
-  {<span class=SpellE>double,int</span> }
+  <span class=SpellE>double</span> 
   </td>
  </tr>
  <tr style='mso-yfti-irow:17;'>
@@ -507,12 +630,53 @@ style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;'>
  <span class=SpellE>M_<span class=GramE>Avg</span></span><span
-  class=GramE>( {</span><span class=SpellE>mdouble</span>, mint} ) <span
+  class=GramE>(</span><span class=SpellE>mdouble</span>) <span
   style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
   mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
   double
   <span class=SpellE>M_<span class=GramE>Avg</span></span><span
-  class=GramE>(</span>{<span class=SpellE>mdouble</span>, mint},duration) <span
+  class=GramE>(</span><span class=SpellE>mdouble</span>,duration) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
+  double
+  </td>
+ </tr>
+  <tr style='mso-yfti-irow:15;height:17.55pt'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.55pt'>
+  <span class=SpellE>M_<span class=GramE>Max</span></span><span
+  class=GramE>(</span><span class=SpellE>mint</span>) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
+  <span class=SpellE>int</span>
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:16;height:19.55pt'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:19.55pt'>
+  <span class=SpellE>M_<span class=GramE>Min</span></span><span
+  class=GramE>(</span><span class=SpellE>mint</span>) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
+  <span class=SpellE>int</span> 
+  </td>
+ </tr>
+ <tr style='mso-yfti-irow:17;'>
+  <td width=242 style='width:600pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;'>
+ <span class=SpellE>M_<span class=GramE>Avg</span></span><span
+  class=GramE>(</span><span class=SpellE>mint</span>) <span
+  style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
+  mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
+  double
+  <span class=SpellE>M_<span class=GramE>Avg</span></span><span
+  class=GramE>(</span><span class=SpellE>mint</span>,duration) <span
   style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
   mso-hansi-font-family:"Linux Libertine";mso-bidi-font-family:"Times New Roman"'>→</span>
   double
