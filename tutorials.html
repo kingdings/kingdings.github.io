@@ -73,7 +73,7 @@
 <h4 class=" text-left mb-sm-2">Examples types</h4>
 <hr>
 <h6 style="line-height:22px; font-size:13px; text-align:justify; text-justify:inter-ideograph;"  class="mt-3">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	MPoint: ((40.67 -73. 83) 1000, (40.74, -73.99) 2000).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	MPoint: ((40.67 -73.83) 1000, (40.74, -73.99) 2000).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	STPhoto: ('http://u-gis.net/p1.jpg' (40.74, -73.99) 1000 60 13.15 10).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	MDouble: (1.0 1000, 2.0 1100, 1.5 1200).<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	MVideo: ('http://u-gis.net/mv1.mp4', ('t=1' (40.74, -73.99) 1000 60 13.17 10), ('t=2', (40.75, -73.93) 2000 60 12.59 10)).
@@ -129,6 +129,12 @@ CREATE TABLE userVideos
 );
 select addmgeometrycolumn('public','uservideos','mv',4326,'mvideo',2, 3000);
 
+CREATE TABLE city
+(
+	id	integer,
+	name	text,
+	geo	polygon
+);
 
 </pre>
 </div>
@@ -151,9 +157,9 @@ insert into uservideos (id, name) values( 1, 'mv0001');
 <h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;">
 Append current moving objects data into car 1’s trajectory, stphoto, video and sensor in the table.<br><br>
 <div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
-<pre style="height: 48px;">
+<pre>
 UPDATE userTrajs
-SET mt = M_Append (mt, 'MPOINT ((40.67 -73. 83) 1000,(41.67 -73.81) 2000)')
+SET mt = M_Append (mt, 'MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)')
 WHERE id = 1; 
 
 UPDATE userStphotos
@@ -165,8 +171,9 @@ SET md_accx = M_Append (md_accx, 'MDOUBLE (1.002 1503828254949, 1.042 1503828254
 WHERE id = 1; 
 
 UPDATE userVideos
-SET mv = M_Append (mv, 'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     40.68 -73.81) 2000)')
+SET mv = M_Append (mv, 'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)')
 WHERE id = 1; 
+
 </pre>
 </div>
 <br><br>
@@ -308,10 +315,84 @@ WHERE id = 1;
   </td>
  </tr>
 </table>
-
-</div>
+</div><br><br>
 </h6>
+
+
 <h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;">
+Function test<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_At('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 2);
+	------>Return: (,,"{""(40.77,-73.96)""}","{""2017-09-02 08:14:23""}")
+
+SELECT M_NumOf('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)');
+	------>Return: 2
+
+SELECT M_Time('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)');
+	------>Return:(1504354462000,1504354501000)
+
+SELECT M_StartTime('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)');
+	------>Return:1504354462000
+
+SELECT M_EndTime('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)');
+	------>Return:1504354501000
+
+SELECT M_Spatial('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)');
+	------>Return:LINESTRING(40.77 -73.95,40.77 -73.96)
+
+SELECT M_Snapshot('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 1000);
+	------>Return:POINT(40.77 -73.95)
+
+SELECT M_Slice('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 'Period (1100, 1200)');
+	------>Return:(,,"{""(40.77,-73.95)"",""(40.77,-73.96)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}")
+
+SELECT M_Lattice('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 2000);
+	------>Return:(,,"{""(40.77,-73.95)""}","{""2017-09-02 08:14:22""}")
+
+SELECT M_tOverlaps('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 'Period (1100, 2200)');
+	------>Return: true
+
+</pre>
+</div><br>
+Table test<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_At(mt, 2) FROM usertrajs;
+	------>Return: (1,286114,"{""(40.77,-73.96)""}","{""2017-09-02 08:14:23""}")
+
+SELECT M_NumOf(mt) FROM usertrajs;
+	------>Return: 2
+
+SELECT M_Time(mt) FROM usertrajs;
+	------>Return:(1504354462000,1504354501000)
+
+SELECT M_StartTime(mt) FROM usertrajs;
+	------>Return:1504354462000
+
+SELECT M_EndTime(mt) FROM usertrajs;
+	------>Return:1504354501000
+
+SELECT M_Spatial(mt) FROM usertrajs;
+	------>Return:LINESTRING(40.77 -73.95,40.77 -73.96)
+
+SELECT M_Snapshot(mt, 1000) FROM usertrajs;
+	------>Return:POINT(40.77 -73.95)
+
+SELECT M_Slice(mt, 'Period (1100, 1200)') FROM usertrajs;
+	------>Return:(1,286114,"{""(40.77,-73.95)"",""(40.77,-73.96)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}")
+
+SELECT M_Lattice(mt, 2000) FROM usertrajs;
+	------>Return:(1,286114,"{""(40.77,-73.95)""}","{""2017-09-02 08:14:22""}")
+
+SELECT M_tOverlaps(mt, 'Period (1100, 2200)') FROM usertrajs;
+	------>Return: true
+
+</pre>
+</div>
+<hr>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;">
+Query examples <br><br>
 Retrieve videos in userVideos table which are taken during 'period (1100, 1200)'.<br><br>
 <div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 48px;">
@@ -606,11 +687,11 @@ style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
   mso-bidi-font-family:"Times New Roman"'>→</span> double
   </td>
  </tr>
- <tr style='mso-yfti-irow:15;height:17.55pt'>
+ <tr style='mso-yfti-irow:15;'>
   <td width=242 style='width:600pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.55pt'>
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;'>
   <span class=SpellE>M_<span class=GramE>Max</span></span><span
   class=GramE>(</span><span class=SpellE>mdouble</span>) <span
   style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
@@ -618,11 +699,11 @@ style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
   <span class=SpellE>double</span>
   </td>
  </tr>
- <tr style='mso-yfti-irow:16;height:19.55pt'>
+ <tr style='mso-yfti-irow:16;'>
   <td width=242 style='width:600pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:19.55pt'>
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;'>
   <span class=SpellE>M_<span class=GramE>Min</span></span><span
   class=GramE>(</span><span class=SpellE>mdouble</span>) <span
   style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
@@ -647,11 +728,11 @@ style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
   double
   </td>
  </tr>
-  <tr style='mso-yfti-irow:15;height:17.55pt'>
+  <tr style='mso-yfti-irow:15;'>
   <td width=242 style='width:600pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:17.55pt'>
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;'>
   <span class=SpellE>M_<span class=GramE>Max</span></span><span
   class=GramE>(</span><span class=SpellE>mint</span>) <span
   style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
@@ -659,11 +740,11 @@ style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
   <span class=SpellE>int</span>
   </td>
  </tr>
- <tr style='mso-yfti-irow:16;height:19.55pt'>
+ <tr style='mso-yfti-irow:16;'>
   <td width=242 style='width:600pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;height:19.55pt'>
+  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt;'>
   <span class=SpellE>M_<span class=GramE>Min</span></span><span
   class=GramE>(</span><span class=SpellE>mint</span>) <span
   style='font-family:"Calibri",sans-serif;mso-ascii-font-family:"Linux Libertine";
@@ -702,7 +783,179 @@ style='font-family:"Times New Roman",serif'><o:p>&nbsp;</o:p></span></b></p>
  </tr>
 </table>
 
+</div><br><br>
+
+Function test<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_TimeAtCummulative('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 2);
+	------>Return: 1504354471666
+
+SELECT M_Slice('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+	------>Return:(,,"{""(40.77,-73.95)"",""(40.77,-73.96)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_SnapToGrid('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 1);
+	------>Return:(,,"{""(40.8,-74.0)"",""(40.8,-74.0)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_Intersects('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	------>Return:(,,"{t,t}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_mEnters('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+	------>Return:false
+
+SELECT M_mBypasses('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+	------>Return:false
+
+SELECT M_mStayIn('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+	------>Return:true
+
+SELECT M_mLeaves('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+	------>Return:false
+
+SELECT M_mCrosses('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
+	------>Return:false
+
+SELECT M_EvenTime('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	------>Return: (,,"{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Relationship('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	------>Return: (,,"{meet"",inside""}") 
+
+SELECT M_Inside('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	------>Return: (,,"{f,t}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_Equal('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	------>Return: (,,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Overlaps('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	------>Return: (,,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Disjoint('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	------>Return: (,,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Meet('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	------>Return: (,,"{t,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Distance('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	------>Return: (,,"{0,0}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Area('MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	------>Return: (,,"{57.7,57.7}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Direction('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)');
+	------>Return: (,,"{0,-0.08}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_VeolocityAtTime('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 2000);
+	------>Return: 1.37
+	
+SELECT M_AccelerationAtTime('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 2000);
+	------>Return: 0.0006
+	
+SELECT M_Max(md_accx);
+	------>Return: 1.8
+	
+SELECT M_Min(md_accx);
+	------>Return: 0.6
+	
+SELECT M_Avg(md_accx);
+	------>Return: 0.9
+	
+SELECT M_DWithin('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)', 500);
+	------>Return: true
+	
+</pre>
+</div><br>
+Table test<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_TimeAtCummulative(mt, 2) FROM usertrajs;
+	------>Return: 1504354471666
+
+SELECT M_Slice(mt, 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))') FROM usertrajs;
+	------>Return:(1,286114,"{""(40.77,-73.95)"",""(40.77,-73.96)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_SnapToGrid(mt, 1) FROM usertrajs;
+	------>Return:(1,286114,"{""(40.8,-74.0)"",""(40.8,-74.0)""}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_Intersects('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) from userVideos;
+	------>Return:(1,286114,"{t,t}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_mEnters(mt, 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))') FROM usertrajs;
+	------>Return:false
+
+SELECT M_mBypasses(mt, 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))') FROM usertrajs;
+	------>Return:false
+
+SELECT M_mStayIn(mt, 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))') FROM usertrajs;
+	------>Return:true
+
+SELECT M_mLeaves(mt, 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))') FROM usertrajs;
+	------>Return:false
+
+SELECT M_mCrosses(mt, 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))') FROM usertrajs;
+	------>Return:false
+
+SELECT M_EvenTime(('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) from userVideos;
+	------>Return: (1,286114,"{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Relationship('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) from userVideos;
+	------>Return: (1,286114,"{meet"",inside""}") 
+
+SELECT M_Inside('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) from userVideos;
+	------>Return: (1,286114,"{f,t}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_Equal('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) from userVideos;
+	------>Return: (1,286114,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Overlaps('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) from userVideos;
+	------>Return: (1,286114,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Disjoint('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) from userVideos;
+	------>Return: (1,286114,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Meet('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) from userVideos;
+	------>Return: (1,286114,"{t,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Distance('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) from userVideos;
+	------>Return: (1,286114,"{0,0}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Area(mv) FROM uservideos;
+	------>Return: (1,286114,"{57.7,57.7}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Direction(mt) FROM usertrajs;
+	------>Return: (1,286114,"{0,-0.08}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_VeolocityAtTime(mt, 2000) FROM usertrajs;
+	------>Return: 1.37
+	
+SELECT M_AccelerationAtTime(mt, 2000) FROM usertrajs;
+	------>Return: 0.0006
+	
+SELECT M_Max(md_accx) FROM userSensors;
+	------>Return: 1.8
+	
+SELECT M_Min(md_accx) FROM userSensors;
+	------>Return: 0.6
+	
+SELECT M_Avg(md_accx) FROM userSensors;
+	------>Return: 0.9
+	
+SELECT M_DWithin('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', b.mv, 500) FROM userVideos;
+	------>Return: true
+	
+</pre>
 </div>
+Query Examples<br><br>
 Retrieve videos in userVideos table which have entered the city 'New York'. <br><br>
 <div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 48px;">
@@ -732,42 +985,6 @@ M_Distance( a.mt, 'POLYGON ((40.74 -73.99, 40.74 -73.98, 40.73 -73.98, 40.73 -73
 <br><br>
 <h4 class=" text-left mb-sm-2">Similarity queries	</h4>
 <hr>
-<h6 style=" font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
-Return LCVS similarity distances between two videos in userVideos table.<br><br>
-<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
-<pre style="height: 32px;">SELECT a.id, b.id, M_LCVS (a.mv, b.mv, 40) 
-FROM userVideos a, userVideos b;</pre>
-</div>
-<br><br>
-<h4 class=" text-left mb-sm-2">FOV queries	</h4>
-<hr>
-<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
-Retrieve FOVs from userVideos table.<br><br>
-<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
-<pre style="height: 32px;">
-SELECT id, M_FOV(mv) 
-FROM userVideos;
-</pre>
-</div>
-<hr>
-<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
-Retrieve FOVs in userVideos table that the shortest distance is less than 10m.<br><br>
-<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
-<pre style="height: 48px;">
-SELECT a.id, b.id, M_FOV(a.mv), M_FOV(b.mv)
-FROM userVideos a, userVideos b 
-WHERE M_DWithin(a.mv, a.mv, 10);
-</pre>
-</div>
-<br><br>
-
-
-
-
-<h4 class=" text-left mb-sm-2">Join queries	</h4>
-<hr>
-<h6 style="font-size:13px;">
-
 
 <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
 text-align:center;line-height:normal'><b style='mso-bidi-font-weight:normal'><span
@@ -842,7 +1059,168 @@ Operations </p>
   </td>
  </tr>
 </table></div>
+<br>
 
+
+
+<h6 style=" font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Function test<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_Hausdorff('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	------>Return: 0
+
+SELECT M_LCSS('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	------>Return: 1
+
+SELECT M_Traclus('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	------>Return: 0.00145
+
+SELECT M_LCVS('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
+	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	------>Return: 1
+
+</pre>
+</div><br>
+Table test<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_Hausdorff('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) FROM userVideos;
+	------>Return: 0
+
+SELECT M_LCSS('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) FROM userVideos;
+	------>Return: 1
+
+SELECT M_Traclus('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) FROM userVideos;
+	------>Return: 0.00145
+
+SELECT M_LCVS('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', mv) userVideos;
+	------>Return: 1
+
+</pre>
+</div>
+Query Examples<br><br>
+Return LCVS similarity distances between two videos in userVideos table.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>SELECT a.id, b.id, M_LCVS (a.mv, b.mv, 40) 
+FROM userVideos a, userVideos b;
+
+</pre>
+</div>
+<br><br>
+
+
+
+
+
+
+<h4 class=" text-left mb-sm-2">FOV queries	</h4>
+<hr>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Function test<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_FOV('STPHOTO (00001.mp4?t=1 100 200 10 0.1 10   40.63 -73.56 1000)');
+	------>Return: (10,,10,,0.1)
+
+SELECT M_MFOV('MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	------>Return:(,,"{(10,,10,,0.1),(10,,10,,0.1)}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+And also support Table 1,2,3 functions.
+
+</pre>
+</div><br>
+Table test<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_FOV(st) FROM userStphotos;
+	------>Return: (10,,10,,0.1)
+
+SELECT M_MFOV(mv) FROM userVideos;
+	------>Return:(1,286114,"{(10,,10,,0.1),(10,,10,,0.1)}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+</pre>
+</div>
+
+Query Examples<br><br>
+Retrieve FOVs from userVideos table.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre style="height: 32px;">
+SELECT id, M_MFOV(mv) 
+FROM userVideos;
+</pre>
+</div>
+<hr>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Retrieve FOVs in userVideos table that the shortest distance is less than 10m.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre style="height: 48px;">
+SELECT a.id, b.id, M_MFOV(a.mv), M_MFOV(b.mv)
+FROM userVideos a, userVideos b 
+WHERE M_DWithin(a.mv, a.mv, 10);
+</pre>
+</div>
+<br><br>
+
+
+
+
+<h4 class=" text-left mb-sm-2">Join queries	</h4>
+<hr>
+<h6 style="font-size:13px;">
+
+Table test<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT M_Intersects(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return:(1,286114,"{t,t}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_EvenTime(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Relationship(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{meet"",inside""}") 
+
+SELECT M_Inside(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{f,t}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+
+SELECT M_Equal(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Overlaps(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Disjoint(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Meet(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{t,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_Distance(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: (1,286114,"{0,0}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
+	
+SELECT M_DWithin(a.mt, b.mv, 500) FROM usertrajs a, userVideos b;
+	------>Return: true
+	
+SELECT M_Hausdorff(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: 0
+
+SELECT M_LCSS(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: 1
+
+SELECT M_Traclus(a.mt, b.mv) FROM usertrajs a, userVideos b;
+	------>Return: 0.00145
+
+SELECT M_LCVS(a.mv, b.mv) FROM userVideos a, userVideos b;
+	------>Return: 1
+
+</pre>
+</div>
+
+Query Examples<br><br>
 Find the videos which could be taken car 'TRUMP001'.<br><br>
 <div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 48px;">
