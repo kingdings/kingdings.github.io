@@ -982,6 +982,7 @@ FROM userTrajs a
 WHERE  M_Max( 
 M_Distance( a.mt, 'POLYGON ((40.74 -73.99, 40.74 -73.98, 40.73 -73.98, 40.73 -73.99, 40.74 -73.99 ))')) < 500.0;</pre>
 </div>
+
 <br><br>
 <h4 class=" text-left mb-sm-2">Similarity queries	</h4>
 <hr>
@@ -1239,6 +1240,47 @@ FROM userVideos a, userVideos b
 WHERE M_LCSS( M_Slice(a.mv, 'Period (1100, 1150)'), M_Slice(b.mv, 'Period (1100, 1150)'), 0.01, 40) = 1;
 </pre>
 </div>
+<h6 style="font-size:13px; text-align:justify; text-justify:inter-ideograph;" >
+Other queries.<br><br>
+<div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
+<pre>
+SELECT m_numof(a.mv)
+FROM uservideos a
+WHERE (m_spatial(a.mv) && ST_MakeEnvelope ( -73.857803, 40.659805, -73.798346, 40.692615, 4326) AND 
+	m_tIntersects(a.mv, 'Period (1503828255000, 1503828259000)'));
+	
+SELECT m_min(m_distance(a.mv, b.mv))
+FROM uservideos a, uservideos b
+WHERE ( m_spatial(a.mv) && ST_MakeEnvelope (  -73.857803, 40.659805, -73.798346, 40.692615, 4326) AND 
+	m_tIntersects(a.mv , ‘Period (1503828255000, 1503828259000)’))
+      AND ( m_spatial(b.mv) && ST_MakeEnvelope (  -73.857803, 40.659805,  -73.798346, 40.692615,  4326) AND
+	m_tIntersects(b.mv , 'Period (1503828255000, 1503828259000)'));
+	
+SELECT m_slice(a.mt, 'Period (1503828255000, 1503828259000)') 
+FROM usertrajs a
+WHERE ( m_spatial(a.mt) && ST_MakeEnvelope (  -73.857803, 40.659805, -73.798346, 40.692615, 4326) AND
+	m_tIntersects(a.mt , 'Period (1503828255000, 1503828259000)'));
+
+SELECT m_slice(a.mt, 'Period (1503828255000, 1503828259000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))')
+FROM usertrajs a
+WHERE ( m_spatial(a.mt) && ST_MakeEnvelope (  -73.857803, 40.659805, -73.798346, 40.692615, 4326) AND 
+	m_tIntersects(a.mt , 'Period (1503828255000, 1503828259000)'));
+	
+
+SELECT m_leaves(a.mt,  b.mv)
+FROM usertrajs a, uservideos b 
+WHERE m_tIntersects(a.mt , 'Period (1503828255000, 1503828259000)'));
+
+SELECT M_Hausdorff(a.mv, b.mv)
+FROM uservideos a, uservideos b
+WHERE ( m_spatial(a.mv) && ST_MakeEnvelope (  -73.857803, 40.659805, -73.798346, 40.692615, 4326) AND 
+	m_tIntersects(a.mv , ‘Period (1503828255000, 1503828259000)’))
+      AND  ( m_spatial(b.mv) && ST_MakeEnvelope (  -73.857803, 40.659805,  -73.798346, 40.692615,  4326) AND
+	m_tIntersects(b.mv , 'Period (1503828255000, 1503828259000)'));
+
+
+</pre>
+</div>
 <br><br>
 		</div>
 </section>
@@ -1264,4 +1306,3 @@ WHERE M_LCSS( M_Slice(a.mv, 'Period (1100, 1150)'), M_Slice(b.mv, 'Period (1100,
 
 </body>
 </html>
-
