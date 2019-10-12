@@ -105,8 +105,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java examples .................................. SUCCESS<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] PL/Java packaging ................................. SUCCESS<br>
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	4. Make java source root (eg. /tmp/proj), copy all files from (https://github.com/awarematics/mgeometry/tree/master/PostgreSQL/04.proj) <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	5. In the path: /tmp/proj <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	4. Make java source root (eg. /tmp/proj), download all files from (https://github.com/awarematics/mgeometry/tree/master/PostgreSQL/04.proj) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	5. Copy the folder 04_proj/ files into a path, such as: /tmp/proj, move to the path: <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		$make clean package    <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] Building jar: /tmp/proj/target/proj-0.0.1-SNAPSHOT.jar<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	[INFO] ------------------------------------------------------------------------<br>
@@ -131,6 +131,7 @@
 <br>
 <h4 class=" text-left mb-sm-2">3.	Install Function in PostgreSQL	</h4>
 <hr>
+In your postgresql or pgAdmin4 query tool, download and execute follow sql files;<br>
 <h6 style="line-height:22px;font-size:13px; text-align:justify; text-justify:inter-ideograph;" class="mt-3"> 
 3.1	Create table<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github:	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/1_table.sql <br>
@@ -150,16 +151,29 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github:	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/6_functionMGeometry.sql   <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 6_functionMGeometry.sql<br>
 3.6	Test<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github: https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/01.install/7_addJavaJar.sql <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In your postgresql or pgAdmin4 query tool, execute 7_addJavaJar.sql<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github:	https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/03.example/1_createTable.sql <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 1_createTable.sql<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download files from github:	https://github.com/awarematics/mgeometry/tree/master/PostgreSQL/03.example/2_insertTableData <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute insert_carsensors.sql/insert_cartrajs.sql/insert_userstphotos.sql/insert_uservideos.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute<br> 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insert_carsensors.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insert_cartrajs.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insert_userstphotos.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;insert_uservideos.sql<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download files from github:	https://github.com/awarematics/mgeometry/tree/master/PostgreSQL/03.example/3_insertMGeometryData <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute append_mdouble_accx.sql/append_mdouble_accy.sql/append_mdouble_accz.sql/append_mpoint.sql/append_mvideo.sql/append_stphoto.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_mdouble_accx.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_mdouble_accy.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_mdouble_accz.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_mpoint.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_mvideo.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;append_stphoto.sql<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Download from github: https://github.com/awarematics/mgeometry/blob/master/PostgreSQL/03.example/4-8 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute 4_testQuery_Join.sql/5_testQuery_Temporal_mpoint.sql/6_testQuery_Temporal_mvideo.sql/7_testQuery_SpatioTemporal_mpoint.sql/8_testQuery_SpatioTemporal_mvideo.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Execute <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4_testQuery_Join.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5_testQuery_Temporal_mpoint.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6_testQuery_Temporal_mvideo.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7_testQuery_SpatioTemporal_mpoint.sql<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8_testQuery_SpatioTemporal_mvideo.sql<br>
 3.7	Insert All BDD-100k NewYork City Data<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	http://gofile.me/4lVxW/UuCjL3xit <br>
 

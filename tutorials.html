@@ -73,10 +73,10 @@
 <h4 class=" text-left mb-sm-2">Examples types</h4>
 <hr>
 <h6 style="line-height:22px; font-size:13px; text-align:justify; text-justify:inter-ideograph;"  class="mt-3">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	MPoint: ((40.67 -73.83) 1000, (40.74, -73.99) 2000).<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	STPhoto: ('http://u-gis.net/p1.jpg' (40.74, -73.99) 1000 60 13.15 10).<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	MDouble: (1.0 1000, 2.0 1100, 1.5 1200).<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	MVideo: ('http://u-gis.net/mv1.mp4', ('t=1' (40.74, -73.99) 1000 60 13.17 10), ('t=2', (40.75, -73.93) 2000 60 12.59 10)).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	MPOINT: ((40.67 -73.83) 1000, (40.74, -73.99) 2000).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	STPHOTO (http://data.u-gis.net/img/003.jpg 100 200 (10 0 60 30 0.001) null (40.65 -73.56) 3000).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	MDOUBLE: (1.0 1000, 2.0 1100, 1.5 1200).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•	MVIDEO (uri, MPOINT ((0.0 0.0) 1000, (2.0 5.0) 2000, (34.0 333.0) 3000), FRAME ((1 1 1 1 1), (1 1 1 1 2), (1 1 1 1 3))).
 <br><br>
 
 </h6>
@@ -115,12 +115,12 @@ CREATE TABLE userSensors
 	id	integer,
 	carnumber	text
 );
-select addmgeometrycolumn('public','usersensors','md_accx',4326,'mdouble',2, 3000);
-select addmgeometrycolumn('public','usersensors','md_accy',4326,'mdouble',2, 3000);
-select addmgeometrycolumn('public','usersensors','md_accz',4326,'mdouble',2, 3000);
-select addmgeometrycolumn('public','usersensors','md_gyrox',4326,'mdouble',2, 3000);
-select addmgeometrycolumn('public','usersensors','md_gyroy',4326,'mdouble',2, 3000);
-select addmgeometrycolumn('public','usersensors','md_gyroz',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','accx',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','accy',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','accz',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','gyrox',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','gyroy',4326,'mdouble',2, 3000);
+select addmgeometrycolumn('public','usersensors','gyroz',4326,'mdouble',2, 3000);
 
 CREATE TABLE userVideos 
 (
@@ -158,20 +158,24 @@ insert into uservideos (id, name) values( 1, 'mv0001');
 Append current moving objects data into car 1’s trajectory, stphoto, video and sensor in the table.<br><br>
 <div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre>
+--------'MPOINT ((point) t, (point) t...)'
 UPDATE userTrajs
 SET mt = M_Append (mt, 'MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)')
 WHERE id = 1; 
 
+--------'STPHOTO (uri width height (frame(fov) annotation.json (point) t)'
 UPDATE userStphotos
-SET st = M_Append (st, 'STPHOTO (00001.mp4?t=1 100 200 10 0.1 10   40.63 -73.56 1000)')
+SET st = M_Append (st, 'STPHOTO (http://data.u-gis.net/img/003.jpg 100 200 (10 0 60 30 0.001) null (40.65 -73.56) 3000)')
 WHERE id = 1; 
 
+--------'MDOUBLE (double t, double t...)'
 UPDATE userSensors
 SET md_accx = M_Append (md_accx, 'MDOUBLE (1.002 1503828254949, 1.042 1503828254969)')
 WHERE id = 1; 
 
+--------'MVIDEO (uri, mpoint ((point) t, (point) t...), frame ((horizontalAngle verticalAngle distance direction2d direction3d), (horizontalAngle verticalAngle distance direction2d direction3d)...))'
 UPDATE userVideos
-SET mv = M_Append (mv, 'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)')
+SET mv = M_Append (mv, 'MVIDEO (uri, MPOINT ((0.0 0.0) 1000, (2.0 5.0) 2000, (34.0 333.0) 3000), FRAME ((1 1 1 1 1), (1 1 1 1 2), (1 1 1 1 3)))')
 WHERE id = 1; 
 
 </pre>
@@ -816,50 +820,6 @@ SELECT M_mLeaves('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON (
 
 SELECT M_mCrosses('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 'POLYGON ((39 -74, 39 -72, 43 -72, 43 -74, 39 -74))');
 	------>Return:false
-
-SELECT M_EventTime('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 
-	'MVIDEO ((00001.mp4?t=1 10 -1 0.1 -5.59 -1 -1 null null 40.67 -73.83) 1000, 
-		(00001.mp4?t=2 10 -1 0.1 -5.61 -1 -1 null null 41.67 -73.81) 2000)');
-	------>Return: (,,"{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
-	
-SELECT M_Relationship('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 
-	'MVIDEO ((00001.mp4?t=1 10 -1 0.1 -5.59 -1 -1 null null 40.67 -73.83) 1000, 
-		(00001.mp4?t=2 10 -1 0.1 -5.61 -1 -1 null null 41.67 -73.81) 2000)');
-	------>Return: (,,"{meet"",inside""}") 
-
-SELECT M_Inside('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 
-	'MVIDEO ((00001.mp4?t=1 10 -1 0.1 -5.59 -1 -1 null null 40.67 -73.83) 1000, 
-		(00001.mp4?t=2 10 -1 0.1 -5.61 -1 -1 null null 41.67 -73.81) 2000)');
-	------>Return: (,,"{f,t}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
-
-SELECT M_Equal('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 
-	'MVIDEO ((00001.mp4?t=1 10 -1 0.1 -5.59 -1 -1 null null 40.67 -73.83) 1000, 
-		(00001.mp4?t=2 10 -1 0.1 -5.61 -1 -1 null null 41.67 -73.81) 2000)');
-	------>Return: (,,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
-	
-SELECT M_Overlaps('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 
-	'MVIDEO ((00001.mp4?t=1 10 -1 0.1 -5.59 -1 -1 null null 40.67 -73.83) 1000, 
-		(00001.mp4?t=2 10 -1 0.1 -5.61 -1 -1 null null 41.67 -73.81) 2000)');
-	------>Return: (,,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
-	
-SELECT M_Disjoint('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)', 
-	'MVIDEO ((00001.mp4?t=1 10 -1 0.1 -5.59 -1 -1 null null 40.67 -73.83) 1000, 
-		(00001.mp4?t=2 10 -1 0.1 -5.61 -1 -1 null null 41.67 -73.81) 2000)');
-	------>Return: (,,"{f,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
-	
-SELECT M_Meet('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
-	'MVIDEO ((00001.mp4?t=1 10 -1 0.1 -5.59 -1 -1 null null 40.67 -73.83) 1000, 
-		(00001.mp4?t=2 10 -1 0.1 -5.61 -1 -1 null null 41.67 -73.81) 2000)');
-	------>Return: (,,"{t,f}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
-	
-SELECT M_Distance('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
-	'MVIDEO ((00001.mp4?t=1 10 -1 0.1 -5.59 -1 -1 null null 40.67 -73.83) 1000, 
-		(00001.mp4?t=2 10 -1 0.1 -5.61 -1 -1 null null 41.67 -73.81) 2000)');
-	------>Return: (,,"{0,0}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
-	
-SELECT M_Area('MVIDEO ((00001.mp4?t=1 10 -1 0.1 -5.59 -1 -1 null null 40.67 -73.83) 1000, 
-	(00001.mp4?t=2 10 -1 0.1 -5.61 -1 -1 null null 41.67 -73.81) 2000)');
-	------>Return: (,,"{57.7,57.7}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
 	
 SELECT M_Direction('MPOINT ((40.67 -73.83) 1000, (41.67 -73.81) 2000)');
 	------>Return: (,,"{0,-0.08}","{""2017-09-02 08:14:22"",""2017-09-02 08:14:23""}") 
@@ -942,12 +902,6 @@ SELECT M_VelocityAtTime(mt, 2000) FROM usertrajs;
 	
 SELECT M_AccelerationAtTime(mt, 2000) FROM usertrajs;
 	------>Return: 0.0006
-	
-SELECT M_Max(md_accx) FROM userSensors;
-	------>Return: 1.8
-	
-SELECT M_Min(md_accx) FROM userSensors;
-	------>Return: 0.6
 	
 SELECT M_Avg(md_accx) FROM userSensors;
 	------>Return: 0.9
@@ -1068,19 +1022,19 @@ Test I<br><br>
 <div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre>
 SELECT M_Hausdorff('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
-	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	''MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)');
 	------>Return: 0
 
 SELECT M_LCSS('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
-	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	''MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)');
 	------>Return: 1
 
 SELECT M_Traclus('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
-	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
-	------>Return: 0.00145
+	''MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)');
+	------>Return: 0
 
 SELECT M_LCVS('MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)', 
-	'MVIDEO ((00001.mp4?t=1 10  0.1 -5.59     40.67 -73.83) 1000, (00001.mp4?t=2 10  0.1 -5.61     41.67 -73.81) 2000)');
+	''MPOINT ((40.67 -73.83) 1000,(41.67 -73.81) 2000)');
 	------>Return: 1
 
 </pre>
@@ -1123,17 +1077,6 @@ FROM userVideos a, userVideos b;
 Test I<br><br>
 <div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre>
-select M_FOV('MVIDEO ((00001.mp4?t=1 10 -1 0.1 -5.59 -1 -1 null null 40.67 -73.83) 1000,
-	(00001.mp4?t=2 10 -1 0.1 -5.61 -1 -1 null null 41.67 -73.81) 2000)',2);
-	------>Return: (10,,-5.61,,0.1)
-
-select M_FOV('STPHOTO (00001.mp4?t=1 100 200 10 10 0.1  null 40.63 -73.56 1000)');
-	------>Return: (10,,10,,0.1)
-	
-select M_mFOV('MVIDEO ((00001.mp4?t=1 10 -1 0.1 -5.59 -1 -1 null null 40.67 -73.83) 1000, 
-	(00001.mp4?t=2 10 -1 0.1 -5.61 -1 -1 null null 41.67 -73.81) 2000)');
-	------>Return:("{""(10,,-5.59,,0.1)"",""(10,,-5.61,,0.1)""}","{""(40.67,-73.83)"",
-		""(41.67,-73.81)""}","{""1969-12-31 19:00:01"",""1969-12-31 19:00:02""}")
 
 And also support Table 1,2,3 functions.
 
@@ -1142,14 +1085,6 @@ And also support Table 1,2,3 functions.
 Test II<br><br>
 <div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre>
-SELECT M_FOV(mv, 2) FROM userVideos;
-	------>Return: (10,,10,,0.1)
-
-SELECT M_MFOV(mv) FROM userVideos;
-	------>Return: ("{""(60,,-15.59,,0.001)"",""(60,,-15.597,,0.001)""}","{""2017-08-27 06:04:15"",""2017-08-27 06:04:16""}")
-
-select M_AsText(st) from userStphotos;
-	------>Return: STPHOTO (00001.mp4?t=1 100 200 10 10 0.1  null 40.63 -73.56 1000)
 
 </pre>
 </div>
@@ -1158,7 +1093,7 @@ Query Examples<br><br>
 Retrieve FOVs from userVideos table.<br><br>
 <div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 32px;">
-SELECT id, M_MFOV(mv) 
+SELECT id, M_FOV(mv) 
 FROM userVideos;
 </pre>
 </div>
@@ -1167,7 +1102,7 @@ FROM userVideos;
 Retrieve FOVs in userVideos table that the shortest distance is less than 10m.<br><br>
 <div style="background-color: #EDEDDF; padding-top:10px;padding-left:100px;">
 <pre style="height: 48px;">
-SELECT a.id, b.id, M_MFOV(a.mv), M_MFOV(b.mv)
+SELECT a.id, b.id, M_FOV(a.mv), M_FOV(b.mv)
 FROM userVideos a, userVideos b 
 WHERE M_DWithin(a.mv, a.mv, 10);
 </pre>
